@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    {{> meta}}
+
+    <title>{{profile.username}} | Eight Ball</title>
+
+    {{> css}}
+
+</head>
+
+<body>
+
+    {{> navbar active_profile=true}}
+
+    <div class="container">
+
+        <div class="row justify-content-end mb-3">
+            <div class="col-xl-4 col-lg-5 col-md-6">
+                {{> search}}
+            </div>
+        </div>
+
+        {{> flash}}
+
+        <div class="jumbotron mb-0 d-flex flex-lg-row flex-column justify-content-sm-between align-items-center">
+            <h1 class="display-1 text-truncate mw-100">{{profile.username}}</h1>
+            <h1 class="display-3 text-muted"><span class="badge badge-secondary">{{profile.wins}}W - {{profile.losses}}L</span></h1>
+        </div>
+
+        <div class="row mt-0">
+
+            <div class="col-md-5 col-lg-4">
+
+                <div class="sticky-top pt-4">
+                    <div class="list-group">
+                        <div class="list-group-item list-group-item-secondary d-flex justify-content-between align-items-center">
+                            <span class="h5 mb-0">{{profile.username}}</span>
+                            <span class="badge badge-light badge-pill">#{{profile.id}}</span>
+                        </div>
+                        <div class="list-group-item">{{profile.firstname}} {{profile.lastname}}</div>
+                        <div class="list-group-item">{{profile.email}}</div>
+                        <div class="list-group-item">Games Played: {{gamesPlayed}}<br>Winrate: {{winRate}}</div>
+                        {{#if selfProfile}}
+                        <button type="button" data-toggle="modal" data-target="#deleteProfile" class="list-group-item list-group-item-action list-group-item-danger">Delete Profile</button>
+                        {{/if}}
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="col-md-7 col-lg-8">
+
+                {{#each games}}
+                <div class="card mt-4">
+                    <div class="card-header d-flex justify-content-between align-items-center">
+                        <span>Game#{{this.id}}</span>
+                        <span>{{this.time}}</span>
+                    </div>
+                    <div class="card-body">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <a href="/profile/{{this.player1Id}}" class="h5 mb-0 text-body">{{this.player1Username}}</a>
+                            <a href="/profile/{{this.player2Id}}" class="h5 mb-0 text-body">{{this.player2Username}}</a>
+                        </div>
+                        <div class="d-flex justify-content-between align-items-top">
+                            <span class="text-muted">#{{this.player1Id}}</span>
+                            <h2 class="">{{this.player1Score}} - {{this.player2Score}}</h2>
+                            <span class="text-muted">#{{this.player2Id}}</span>
+                        </div>
+                    </div>
+                </div>
+                {{else}}
+                <div class="text-center border rounded px-3 py-5 mt-4">
+                    <p>{{#if selfProfile}}You have{{else}}{{profile.username}} has{{/if}} not played any games yet.</p>
+                    <a href="/play/">Play a game now</a>
+                </div>
+                {{/each}}
+
+            </div>
+
+        </div>
+
+    </div>
+
+    {{#if selfProfile}}
+    <div class="modal fade" id="deleteProfile" tabindex="-1" role="dialog" aria-labelledby="deleteProfileLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <form action="/delete/" method="post">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="deleteProfileLabel">Delete Profile</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    </div>
+                    <div class="modal-body">
+                        <p class="text-danger">Are you sure you want to delete your profile?</p>
+                        <input type="password" name="password" placeholder="Password" class="form-control" required>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-danger">Delete Profile</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+    {{/if}}
+
+    {{> js}}
+
+</body>
+
+</html>

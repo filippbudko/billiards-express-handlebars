@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    {{> meta}}
+
+    <title>Dashboard | Eight Ball</title>
+
+    {{> css}}
+
+</head>
+
+<body>
+
+    {{> navbar}}
+
+    <div class="container">
+
+        <div class="row justify-content-end mb-3">
+            <div class="col-xl-4 col-lg-5 col-md-6">
+                {{> search}}
+            </div>
+        </div>
+
+        {{> flash}}
+
+        <div class="jumbotron d-flex flex-lg-row flex-column justify-content-sm-between align-items-center">
+            <h1 class="display-1 text-truncate mw-100">{{user.username}}</h1>
+            <h1 class="display-3 text-muted"><span class="badge badge-secondary">{{user.wins}}W - {{user.losses}}L</span></h1>
+        </div>
+
+        <div class="row">
+            <div class="col-md">
+                <a href="/play/" class="btn btn-primary btn-lg btn-block py-4"><h1>Play</h1></a>
+                <ul class="list-group mt-4">
+                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                        Players Online:
+                        <span class="badge badge-info badge-pill">{{playersOnline}}</span>
+                    </li>
+                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                        Players in Queue:
+                        <span class="badge badge-info badge-pill">{{playersInQueue}}</span>
+                    </li>
+                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                        Games in Progress:
+                        <span class="badge badge-info badge-pill">{{gamesInProgress}}</span>
+                    </li>
+                </ul>
+            </div>
+            <div class="col-md mt-4 mt-md-0">
+                <a href="/profile/" class="btn btn-dark btn-lg btn-block py-4"><h3>Profile</h3></a>
+                {{#if game}}
+                <div class="card mt-4">
+                    <div class="card-header d-flex justify-content-between align-items-center">
+                        <span>Last Played Game</span>
+                        <span>{{game.time}}</span>
+                    </div>
+                    <div class="card-body">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <a href="/profile/{{game.player1Id}}" class="h5 mb-0 text-body">{{game.player1Username}}</a>
+                            <a href="/profile/{{game.player2Id}}" class="h5 mb-0 text-body">{{game.player2Username}}</a>
+                        </div>
+                        <div class="d-flex justify-content-between align-items-top">
+                            <span class="text-muted">#{{game.player1Id}}</span>
+                            <h2 class="">{{game.player1Score}} - {{game.player2Score}}</h2>
+                            <span class="text-muted">#{{game.player2Id}}</span>
+                        </div>
+                    </div>
+                </div>
+                {{else}}
+                <div class="text-center border rounded px-3 py-5 mt-4">
+                    <p>You have not played any games yet.</p>
+                    <a href="/play/">Play a game now</a>
+                </div>
+                {{/if}}
+            </div>
+        </div>
+
+    </div>
+
+    {{> js}}
+
+</body>
+
+</html>
