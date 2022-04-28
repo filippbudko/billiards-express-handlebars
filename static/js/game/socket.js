@@ -6,7 +6,6 @@ const socket = io();
 // Initialise game variable
 let game;
 
-
 // Main game loop
 const gameloop = function () {
     // If there is a game, draw it to the canvas
@@ -15,6 +14,17 @@ const gameloop = function () {
 };
 window.requestAnimationFrame(gameloop);
 
+const getPlayerScore = function (score) {
+    let playerScore = "";
+
+    Array(7 - score).fill().map(() => {
+        playerScore += `<img src='/img/eight-ball.png'>`;
+    })
+    Array(score).fill().map(() => {
+        playerScore += '<div class="bin-ball"></div>'
+    })
+    return playerScore;
+}
 
 // Join queue button click event
 $('#btn-joinQueue').click(() => {
@@ -47,18 +57,16 @@ socket.on('game-start', (data) => {
 
     // Create a new game with the data
     game = new Game(data);
-
     // Display player and opponent names
-    $('#playerUsername').text(game.player.username);
-    $('#opponentUsername').text(game.opponent.username);
-
-    // Add links to the player and opponent's profiles
-    $('#playerUsername').attr('href', `/profile/${game.player.id}`);
-    $('#opponentUsername').attr('href', `/profile/${game.opponent.id}`);
+    $('#playerUserAvatar').html(`<img src="/img/user${game.player.id}.png">`);
+    $('#opponentUserAvatar').html(`<img src="/img/user${game.opponent.id}.png">`);
 
     // Display player and opponent scores
-    $('#playerScore').text(game.player.score);
-    $('#opponentScore').text(game.opponent.score);
+    let playerScore = getPlayerScore(game.player.score);
+    let opponentScore = getPlayerScore(game.opponent.score);;
+
+    $('#playerScore').html(playerScore);
+    $('#opponentScore').html(opponentScore);
 
     // Display  and opponent colours
     $('#playerColour').css('background-color', game.player.colour);
@@ -66,18 +74,12 @@ socket.on('game-start', (data) => {
 
     // If player's turn
     if (game.turn) {
-        // Underline player username and score
-        $('#playerUsername').css('text-decoration', 'underline');
-        $('#playerScore').css('text-decoration', 'underline');
-        $('#opponentUsername').css('text-decoration', 'none');
-        $('#opponentScore').css('text-decoration', 'none');
+        $('#playerStict').css('visibility', 'visible');
+        $('#opponentStict').css('visibility', 'hidden');
     // If opponent's turn
     } else {
-        // Underline opponent username and score
-        $('#playerUsername').css('text-decoration', 'none');
-        $('#playerScore').css('text-decoration', 'none');
-        $('#opponentUsername').css('text-decoration', 'underline');
-        $('#opponentScore').css('text-decoration', 'underline');
+        $('#playerStict').css('visibility', 'hidden');
+        $('#opponentStict').css('visibility', 'visible');
     }
 
     // Show the game
@@ -99,8 +101,11 @@ socket.on('game-updateTurn', (data) => {
         game.updateTurn(data);
 
         // Update player and oppoenent scores
-        $('#playerScore').text(game.player.score);
-        $('#opponentScore').text(game.opponent.score);
+        let playerScore = getPlayerScore(game.player.score);
+        let opponentScore = getPlayerScore(game.opponent.score);;
+    
+        $('#playerScore').html(playerScore);
+        $('#opponentScore').html(opponentScore);
 
         // Update player and opponent colours
         $('#playerColour').css('background-color', game.player.colour);
@@ -108,20 +113,13 @@ socket.on('game-updateTurn', (data) => {
 
         // If player's turn
         if (game.turn) {
-            // Underline player username and score
-            $('#playerUsername').css('text-decoration', 'underline');
-            $('#playerScore').css('text-decoration', 'underline');
-            $('#opponentUsername').css('text-decoration', 'none');
-            $('#opponentScore').css('text-decoration', 'none');
+            $('#playerStict').css('visibility', 'visible');
+            $('#opponentStict').css('visibility', 'hidden');
         // If opponent's turn
         } else {
-            // Underline opponent username and score
-            $('#playerUsername').css('text-decoration', 'none');
-            $('#playerScore').css('text-decoration', 'none');
-            $('#opponentUsername').css('text-decoration', 'underline');
-            $('#opponentScore').css('text-decoration', 'underline');
+            $('#playerStict').css('visibility', 'hidden');
+            $('#opponentStict').css('visibility', 'visible');
         }
-
     }
 });
 

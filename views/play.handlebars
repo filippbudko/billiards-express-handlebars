@@ -13,9 +13,9 @@
 
 <body>
 
-    {{> navbar active_play=true}}
+    {{!-- {{> navbar active_play=true}} --}}
 
-    <div class="container">
+    <div class="game_board pt-5">
 
         {{> flash}}
 
@@ -31,22 +31,42 @@
             <button type="button" id="btn-leaveQueue" class="btn btn-danger">Leave Queue</button>
         </div>
 
-        <div id="game" class="text-center">
-            <div class="d-flex border border-bottom-0 mx-0 pt-2">
-                <div class="d-flex w-50 flex-column flex-sm-row justify-content-around">
-                    <a id="playerUsername" href="#" class="h3 d-block text-body text-truncate">playerUsername</a>
-                    <span id="playerScore" class="h3 d-block">pScore</span>
+        <div id="game" class="container text-center">
+            <div class="d-flex mx-0 pt-2">
+                <div class="d-flex w-40 flex-column flex-sm-row justify-content-around align-items-center userInfo">
+                    <div class="d-flex flex-column justify-content-center align-items-center">
+                        <div id="playerScore" class="d-flex flex-row-reverse px-3 py-1 score-panel"></div>
+                        <div id="playerStict">
+                            <img src="/img/stick.png">
+                        </div>
+                    </div>
+                    <div id="playerUserAvatar" class="h3 d-block text-body text-truncate user">
+                        <img src="/img/user1.png" alt="">
+                    </div>                    
                 </div>
-                <div class="d-flex w-50 flex-column flex-sm-row-reverse justify-content-around">
-                    <a id="opponentUsername" href="#" class="h3 d-block text-body text-truncate">opponentUsername</a>
-                    <span id="opponentScore" class="h3 d-block">oScore</span>
+                <div id="roomInfo" class="d-flex w-20 justify-content-center align-items-center border-3">
+                    <div class="crypto-logo">
+                        <img src="/img/solana.png">
+                    </div>
+                    <div class="display-3 font-weight-bold text-white ml-2">1</div>
+                </div>
+                <div class="d-flex w-40 flex-column flex-sm-row-reverse justify-content-around  align-items-center userInfo">
+                    <div class="d-flex flex-column justify-content-center align-items-center">
+                        <div id="opponentScore" class="d-flex px-3 py-1 score-panel"></div>
+                        <div id="opponentStict">
+                            <img src="/img/stick.png">
+                        </div>
+                    </div>
+                    <div id="opponentUserAvatar" class="h3 d-block text-body text-truncate user">
+                        <img src="/img/user2.png" alt="">
+                    </div>                    
                 </div>
             </div>
-            <div id="colours" class="clearfix border-left border-right" style="margin-top: -5px;">
+            <div id="colours" class="clearfix border-left border-right" style="margin-top: 10px;">
                 <div id="playerColour" class="float-left" style="width: 50%; height: 10px; background-color: none"></div>
                 <div id="opponentColour" class="float-right" style="width: 50%; height: 10px; background-color: none"></div>
             </div>
-            <canvas id="canvas" class="d-block w-100 h-auto mh-100"></canvas>
+            <canvas id="canvas" class="d-block w-100 h-auto mh-100 mt-5"></canvas>
         </div>
 
         <div id="gameEnd" class="border shadow-lg text-center mx-auto py-5 px-5">
@@ -58,6 +78,7 @@
         </div>
 
     </div>
+
 
     <!-- Socket.IO JS -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.1.1/socket.io.js" integrity="sha256-ji09tECORKvr8xB9iCl8DJ8iNMLriDchC1+p+yt1hSs="

@@ -34,13 +34,11 @@ Stick.prototype.draw = function () {
     // Calculate distance from cue ball from power
     let offset = new Vector(-STICK_WIDTH / 2, this.power + 50);
     // Draw rectangle to canvas
-    canvas.drawImage(image, {x: 10, y: 10});
-    // canvas.drawRect(offset, Vector.add(this.position, TABLE), new Vector(STICK_WIDTH, STICK_HEIGHT), 'bisque', this.rotation + Math.PI / 2);
+    canvas.drawRect(offset, Vector.add(this.position, TABLE), new Vector(STICK_WIDTH, STICK_HEIGHT), 'bisque', this.rotation + Math.PI / 2);
 
 };
 
 // Draw guide method
 Stick.prototype.drawGuide = function () {
-    canvas.drawImage(image, {x: 10, y: 10});
-    // canvas.drawRect(new Vector(0,-5), Vector.add(this.position, TABLE), new Vector(2000, 10), 'rgba(0, 0, 0, 0.25)', this.rotation);
+    canvas.drawRect(new Vector(0,-5), Vector.add(this.position, TABLE), new Vector(2000, 10), 'rgba(0, 0, 0, 0.25)', this.rotation);
 };
